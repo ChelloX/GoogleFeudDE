@@ -16,6 +16,8 @@
         <img  src="IMAGES/Google_img.png" width="300" height="100" >
         <br><br>
         <h2>Wähle eine Kategorie:</h2>
+        
+        <input name="Textfeld" type="text" size="53">
         <br><br>
         <b>
         <table style="width: 30%">
