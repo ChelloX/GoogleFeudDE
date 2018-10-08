@@ -13,5 +13,7 @@
     </head>
     <body>
         <h1>Hello World!</h1>
+        
+        <img src="IMAGES/Google_img.png" >
     </body>
 </html>
