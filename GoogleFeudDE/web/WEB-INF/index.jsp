@@ -50,6 +50,22 @@
                 <td align="center">10</td>
             </tr>
         </table>
+        <br>
+        <table style="width: 50%">
+            <tr>
+                <td align="center"><big><font color="#0000FF">Runde</big></td>
+                <td align="center"><big><font color="#0000FF">verbleibende Versuche</big></td>
+                <td align="center"><big><font color="#0000FF">Punkte Gesamt</big></td>
+                <td align="center"><big><font color="#0000FF">Punkte diese Runde</big></td>
+            </tr>
+            <tr>
+            
+                <td align="center"><b><font color="#0000FF">Platzhalter</b></td>
+                <td align="center"><b><font color="#0000FF">Platzhalter</b></td>
+                <td align="center"><b><font color="#0000FF">Platzhalter</b></td>
+                <td align="center"><b><font color="#0000FF">Platzhalter</b></td>
+            </tr>
+        </table>
         </div>
     </body>
 </html>
