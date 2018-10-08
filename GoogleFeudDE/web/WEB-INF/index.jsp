@@ -18,12 +18,12 @@
         <h2>Wähle eine Kategorie:</h2>
         <br><br>
         <b>
-        <table border="1" style="width: 30%">
+        <table style="width: 30%">
             <tr>
-                <td align="center">Kultur</td>
-                <td align="center">Menschen</td>
-                <td align="center">Namen</td>
-                <td align="center">Fragen</td>
+                <td align="center"><button>Kultur</button></td>
+                <td align="center"><button>Menschen</button></td>
+                <td align="center"><button>Namen</button></td>
+                <td align="center"><button>Fragen</button></td>
             </tr>
         </table >
         </b>
