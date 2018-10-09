@@ -17,7 +17,7 @@
         <div align="center">
             <img  src="IMAGES/Google_img.png" width="300" height="100" >
             <br><br>
-            <h2>Wähle eine Kategorie: HALLO</h2>
+            <h2>Wähle eine Kategorie:</h2>
             
             <input name="Input" type="text" size="53">
             <br><br>
