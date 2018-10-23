@@ -50,7 +50,7 @@ public class GoogleSearchAPI {
             for (int i = 0; i < completesuggestion.length(); i++) {
                 JSONObject t1 = (JSONObject) completesuggestion.get(i);
                 JSONObject t2 = (JSONObject) t1.get("suggestion");
-                antworten.put(i, t2.getString("data"));
+                antworten.put(i+1, t2.getString("data"));
             }
             return antworten;
         } else {

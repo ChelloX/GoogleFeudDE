@@ -22,19 +22,17 @@
 
                 <div class="col-md-12">
 
-                    <!-- Session-Reset -->
-                    <div style="display: none">
-                        <form method="post">
-                            <input type="hidden" name="reset" type="text" value="reset" />
-                            <button type="submit" id="reset" class="btn btn-success btn-block" accesskey="r"> 
-                        </form>
-                    </div>
-
                     <!-- Titel-Bild -->
+                    <!-- OnClick Session-Reset + Shortcut über r -->
                     <div class="row">
                         <div class="col-md-12" style="margin-top: 20px">
                             <div class="text-center">
-                                <img type="submit" src="IMAGES/Google_img.png" width="300" height="100" />
+                                <form method="post">
+                                    <input type="hidden" name="reset" value="reset" type="text" />
+                                    <input type="image" src="IMAGES/Google_img.png" width="300" height="100" accesskey="r"/>
+                                </form>
+
+                                <!--<img type="submit" src="IMAGES/Google_img.png" width="300" height="100" />-->
                             </div>
                         </div>
                     </div>
@@ -47,7 +45,7 @@
                                     <!-- Input als type hidden: dient nur zur Unterscheidung der Buttons in IndexServlet -->
                                     <input type="hidden" name="btn1" type="text" value="btn1"/>
                                     <button type="submit" id="btn1" class="btn btn-success btn-block">
-                                        1. Button
+                                        Was-Fragen
                                     </button>
                                 </form>
                             </div>
@@ -56,7 +54,7 @@
                                 <form method="post">
                                     <input type="hidden" name="btn2" type="text" value="btn2"/>
                                     <button type="submit" id="btn2" class="btn btn-success btn-block" onClick="btn2()">
-                                        2. Button
+                                        Wann-Fragen
                                     </button>
                                 </form>
                             </div>
@@ -64,7 +62,7 @@
                                 <form method="post">
                                     <input type="hidden" name="btn3" type="text" value="btn3"/>
                                     <button type="submit" class="btn btn-success btn-block">
-                                        3. Button
+                                        Wo-Fragen
                                     </button>
                                 </form>
                             </div>
@@ -81,7 +79,15 @@
                                             <i class="fas fa-search h4 text-body"></i>
                                         </div>
                                         <div class="col">
-                                            <input  class="form-control form-control-lg form-control-borderless" name="eingabe" type="search" placeholder="Hier steht ein text">
+                                            <%
+                                                StringBuilder sb1 = new StringBuilder();
+                                                sb1.append("<input  class=\"form-control form-control-lg form-control-borderless\" name=\"eingabe\" type=\"search\" placeholder=\"");
+                                                sb1.append(session.getAttribute("zuSuchenderString"));
+                                                sb1.append("\">");
+                                                %>
+                                                
+                                                <%= sb1.toString()%>
+                                            <!--<input  class="form-control form-control-lg form-control-borderless" name="eingabe" type="search" placeholder="Hier steht ein text">-->
                                         </div>
                                         <div class="col-auto">
                                             <button class="btn btn-lg btn-success" type="submit">Eingabe</button>
