@@ -28,8 +28,28 @@ public class IndexServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        HttpSession session = request.getSession(true);
-        session.setAttribute("kategorieGewaehlt", false);
+        HttpSession session = null;
+        if (request.getSession(false) == null) {
+            session = request.getSession(true);
+            session.setAttribute("kategorieGewaehlt", false);
+            session.setAttribute("counterVersuche", 3);
+            session.setAttribute("counterRunde", 0);
+            session.setAttribute("counterPunkte", 0);
+        } else {
+            session = request.getSession();
+        }
+
+        /**
+         * HttpSession session = request.getSession(true);
+         * session.setAttribute("kategorieGewaehlt", false);
+         * session.setAttribute("counterVersuche", 3);
+         * session.setAttribute("counterRunde", 0);
+         * session.setAttribute("counterPunkte", 0); *
+         */
+        if (session.getAttribute("fehlversuch") != null) {
+            int versuche = (int) session.getAttribute("counterVersuche");
+            session.setAttribute("counterVersuche", versuche - 1);
+        }
 
         if (session.getAttribute("trefferKey") != null) {
             session.setAttribute("kategorieGewaehlt", true);
@@ -108,6 +128,8 @@ public class IndexServlet extends HttpServlet {
                         session.setAttribute("trefferKey", key);
                     }
                 }
+            } else {
+                session.setAttribute("fehlversuch", true);
             }
         }
 
