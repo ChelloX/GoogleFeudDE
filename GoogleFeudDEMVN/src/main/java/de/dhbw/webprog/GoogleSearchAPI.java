@@ -7,6 +7,8 @@ package de.dhbw.webprog;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.http.client.fluent.Content;
@@ -14,22 +16,22 @@ import org.apache.http.client.fluent.Request;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.XML;
- 
-/**
- *
- * @author DSemling
- */
+
 public class GoogleSearchAPI {
 
     private final String GOOGLE_API_1 = "https://www.google.com/complete/search?output=toolbar&q=";
     private final String GOOGLE_API_2 = "&hl=de";
+    
+    public String machWas() {
+        return "hier";
+    }
     
     public static void main(String args[]) {
         GoogleSearchAPI a = new GoogleSearchAPI();
         a.gibAntwortenZuString("Karlsruhe");
     }
 
-    public ArrayList<String> gibAntwortenZuString(String suchString) {
+    public HashMap<Integer,String> gibAntwortenZuString(String suchString) {
         suchString = suchString.replace(" ", "%20");
         Content content = null;
 
@@ -44,11 +46,11 @@ public class GoogleSearchAPI {
             JSONObject toplevel = (JSONObject) document.get("toplevel");
             JSONArray completesuggestion = toplevel.getJSONArray("CompleteSuggestion");
 
-            ArrayList<String> antworten = new ArrayList<>();
+            HashMap<Integer, String> antworten = new HashMap<Integer, String>();
             for (int i = 0; i < completesuggestion.length(); i++) {
                 JSONObject t1 = (JSONObject) completesuggestion.get(i);
                 JSONObject t2 = (JSONObject) t1.get("suggestion");
-                antworten.add(t2.getString("data"));
+                antworten.put(i, t2.getString("data"));
             }
             return antworten;
         } else {
@@ -56,3 +58,4 @@ public class GoogleSearchAPI {
         }
     }
 }
+
