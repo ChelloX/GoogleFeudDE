@@ -8,7 +8,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>GoogleFeudDE</title
+        <title>GoogleFeudDE</title>
 
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,7 +26,7 @@
                     <div style="display: none">
                         <form method="post">
                             <input type="hidden" name="reset" type="text" value="reset" />
-                            <button type="submit" id="reset" class="btn btn-success btn-block" accesskey="r">
+                            <button type="submit" id="reset" class="btn btn-success btn-block" accesskey="r"> 
                         </form>
                     </div>
 
