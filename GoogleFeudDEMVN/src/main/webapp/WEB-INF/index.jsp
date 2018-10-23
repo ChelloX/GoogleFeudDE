@@ -84,9 +84,9 @@
                                                 sb1.append("<input  class=\"form-control form-control-lg form-control-borderless\" name=\"eingabe\" type=\"search\" placeholder=\"");
                                                 sb1.append(session.getAttribute("zuSuchenderString"));
                                                 sb1.append("\">");
-                                                %>
-                                                
-                                                <%= sb1.toString()%>
+                                            %>
+
+                                            <%= sb1.toString()%>
                                             <!--<input  class="form-control form-control-lg form-control-borderless" name="eingabe" type="search" placeholder="Hier steht ein text">-->
                                         </div>
                                         <div class="col-auto">
@@ -157,10 +157,10 @@
         </div>
         <div class="col-md-8">
             <div class="text-center">
-                    <div class="col-md-2 badge badge-info" id="roundnumber">RUNDE<br /><span id="roundnumberspan">${counterRunde}</span></div>
+                <div class="col-md-2 badge badge-info" id="roundnumber">RUNDE<br /><span id="roundnumberspan">${counterRunde}</span></div>
                 <div class="col-md-2 badge badge-info" id="trynumber">VERSUCHE<br /><span id="trynumber">${counterVersuche}</span></div>
                 <div class="col-md-2 badge badge-info" id="totalscore">GESAMTPUNKTZAHL<br /><span id="totalscore">${counterPunkte}</span></div>
-            </div>
+                <br><br></div>
         </div>
         <div class="col-md-2">
         </div>
