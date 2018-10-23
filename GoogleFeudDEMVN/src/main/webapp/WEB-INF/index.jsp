@@ -4,6 +4,8 @@
     Author     : DSemling
 --%>
 
+<%@page import="java.util.Map"%>
+<%@page import="java.util.HashMap"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="de.dhbw.webprog.GoogleSearchAPI"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -11,69 +13,104 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>GoogleFeudDE</title>
+        <title>GoogleFeudDE</title
+
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     </head>
     <body>
-        <div align="center">
-            <img  src="IMAGES/Google_img.png" width="300" height="100" >
-            <br><br>
-            <h2>Wähle eine Kategorie:</h2>
-            
-            <input name="Input" type="text" size="53">
-            <br><br>
-            <b>
-                <table style="width: 30%">
-                    <tr>
-                        <td align="center"><button>Kultur</button></td>
-                        <td align="center"><button>Menschen</button></td>
-                        <td align="center"><button>Namen</button></td>
-                        <td align="center"><button>Fragen</button></td>
-                    </tr>
-                </table >
-            </b>
-            <br>
-            <table border="1" style="width: 20%">
+        <div class="container-fluid">
+            <div class="row">
 
-                <%
-                    GoogleSearchAPI gsa = new GoogleSearchAPI();
-                    ArrayList<String> antworten = gsa.gibAntwortenZuString("Karlsruhe");
+                <div class="col-md-12">
 
-                    StringBuffer sb = new StringBuffer();
-                    int counter = 1;
-                    sb.append("<tr> \n");
+                    <!-- Session-Reset -->
+                    <div style="display: none">
+                        <form method="post">
+                            <input type="hidden" name="reset" type="text" value="reset" />
+                            <button type="submit" id="reset" class="btn btn-success btn-block" accesskey="r">
+                        </form>
+                    </div>
 
-                    for (String s : antworten) {
+                    <!-- Titel-Bild -->
+                    <div class="row">
+                        <div class="col-md-12" style="margin-top: 20px">
+                            <div class="text-center">
+                                <img type="submit" src="IMAGES/Google_img.png" width="300" height="100" />
+                            </div>
+                        </div>
+                    </div>
 
-                        sb.append("<td align=\"center\">" + s + "</td> \n");
+                    <!-- Buttons für Kategorien -->    
+                        <div class="row">
+                            <div class="col-md-4" style="margin-top: 5px">
+                                <form method="post">
+                                    <!-- Input als type hidden: dient nur zur Unterscheidung der Buttons in IndexServlet -->
+                                    <input type="hidden" name="btn1" type="text" value="btn1"/>
+                                    <button type="submit" id="btn1" class="btn btn-success btn-block">
+                                        1. Button
+                                    </button>
+                                </form>
+                            </div>
 
-                        if (counter % 2 == 0) {
-                            sb.append("</tr> \n");
-                             sb.append("<tr> \n");
-                        }
-                        counter++;
-                    }
+                            <div class="col-md-4" style="margin-top: 5px">
+                                <form method="post">
+                                    <input type="hidden" name="btn2" type="text" value="btn2"/>
+                                    <button type="submit" id="btn2" class="btn btn-success btn-block" onClick="btn2()">
+                                        2. Button
+                                    </button>
+                                </form>
+                            </div>
+                            <div class="col-md-4" style="margin-top: 5px">
+                                <form method="post">
+                                    <input type="hidden" name="btn3" type="text" value="btn3"/>
+                                    <button type="submit" class="btn btn-success btn-block">
+                                        3. Button
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
 
-                    sb.append("<tr> \n");
-                %>
+                    <!-- Eingabefeld -->
+                        <div class="row justify-content-center" id="suche" style="margin-top: 20px" >
+                            <div class="col-12 col-md-10 col-lg-8">
+                                <form class="card c ard-sm" method="post">
+                                    <div class="card-body row no-gutters align-items-center">
+                                        <div class="col-auto">
+                                            <i class="fas fa-search h4 text-body"></i>
+                                        </div>
+                                        <div class="col">
+                                            <input  class="form-control form-control-lg form-control-borderless" name="eingabe" type="search" placeholder="Hier steht ein text">
+                                        </div>
+                                        <div class="col-auto">
+                                            <button class="btn btn-lg btn-success" type="submit">Eingabe</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
 
-                <%= sb.toString()%>
-            </table>
-            <br>
-            <table style="width: 50%">
-                <tr>
-                    <td align="center"><big><font color="#0000FF">Runde</big></td>
-                <td align="center"><big><font color="#0000FF">verbleibende Versuche</big></td>
-                <td align="center"><big><font color="#0000FF">Punkte Gesamt</big></td>
-                <td align="center"><big><font color="#0000FF">Punkte diese Runde</big></td>
-                </tr>
-                <tr>
 
-                    <td align="center"><b><font color="#0000FF">Platzhalter</b></td>
-                    <td align="center"><b><font color="#0000FF">Platzhalter</b></td>
-                    <td align="center"><b><font color="#0000FF">Platzhalter</b></td>
-                    <td align="center"><b><font color="#0000FF">Platzhalter</b></td>
-                </tr>
-            </table>
+                        <!-- Anzeige der Google-Vorschläge -->
+                        <div class="justify-content-center" style="margin-top: 20px">
+                            <table class="table table-striped table-bordered" >
+                                <thead>
+                                    <tr>
+                                        <td>
+                                            Google-Vorschläge
+                                        </td>
+                                    </tr>
+                                </thead>
+                        </div>
+
+                        </table>   
+
+                </div>
+            </div>
         </div>
-    </body>
+    </div>
+</body>
 </html>
