@@ -1,14 +1,9 @@
-<%-- 
-    Document   : index
-    Created on : 02.10.2018, 16:32:40
-    Author     : DSemling
---%>
-
-<%@page import="java.util.Map"%>
+<<%@page import="java.util.Map"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="de.dhbw.webprog.GoogleSearchAPI"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -45,6 +40,7 @@
                     </div>
 
                     <!-- Buttons für Kategorien -->    
+                    <c:if test="${kategorieGewaehlt == false}">
                         <div class="row">
                             <div class="col-md-4" style="margin-top: 5px">
                                 <form method="post">
@@ -73,8 +69,10 @@
                                 </form>
                             </div>
                         </div>
+                    </c:if>
 
                     <!-- Eingabefeld -->
+                    <c:if test="${kategorieGewaehlt == true}">
                         <div class="row justify-content-center" id="suche" style="margin-top: 20px" >
                             <div class="col-12 col-md-10 col-lg-8">
                                 <form class="card c ard-sm" method="post">
@@ -104,9 +102,39 @@
                                         </td>
                                     </tr>
                                 </thead>
+
+                                <%
+                                    StringBuilder sb = new StringBuilder();
+
+                                    HashMap<Integer, Map.Entry<String, Boolean>> vorschlaege = (HashMap<Integer, Map.Entry<String, Boolean>>) session.getAttribute("vorschlaege");
+
+                                    for (Map.Entry<Integer, Map.Entry<String, Boolean>> e : vorschlaege.entrySet()) {
+                                        Integer key = e.getKey();
+                                        Map.Entry<String, Boolean> value = e.getValue();
+
+                                        String key2 = value.getKey();
+                                        Boolean value2 = value.getValue();
+
+                                        sb.append("<tr> \n");
+                                        if (value2 == false) {
+                                            sb.append("<td style=\"background-color: red\" id=\"" + key + "\"> \n");
+                                            sb.append(key2 + "\n");
+                                            sb.append("</td>");
+                                        }
+
+                                        if (value2 == true) {
+                                            sb.append("<td style=\"background-color: green\" id=\"" + key + "\"> \n");
+                                            sb.append(key2 + "\n");
+                                            sb.append("</td>");
+                                        }
+                                    }
+                                %>
+
+                                <%= sb.toString()%>
                         </div>
 
                         </table>   
+                    </c:if>
 
                 </div>
             </div>
