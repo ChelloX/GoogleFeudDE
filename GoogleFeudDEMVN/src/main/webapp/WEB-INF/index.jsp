@@ -1,4 +1,4 @@
-<<%@page import="java.util.Map"%>
+<%@page import="java.util.Map"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="de.dhbw.webprog.GoogleSearchAPI"%>
@@ -141,4 +141,26 @@
         </div>
     </div>
 </body>
+<footer>
+    <!--
+    <div class ="container" style="    bottom: 0;    position: fixed;    width: 100%; height: 120px;
+    margin: auto;" -->
+
+    <div class = "row fixed-bottom" >
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-8">
+            <div class="text-center">
+                    <div class="col-md-2 badge badge-info" id="roundnumber">RUNDE<br /><span id="roundnumberspan">1</span></div>
+                <div class="col-md-2 badge badge-info" id="trynumber">VERSUCHE<br /><span id="trynumber">1</span></div>
+                <div class="col-md-2 badge badge-info" id="totalscore">GESAMTPUNKTZAHL<br /><span id="totalscore">1</span></div>
+            </div>
+        </div>
+        <div class="col-md-2">
+        </div>
+    </div>        
+
+
+</footer>
+
 </html>
