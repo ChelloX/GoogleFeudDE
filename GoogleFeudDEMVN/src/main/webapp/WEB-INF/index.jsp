@@ -38,35 +38,46 @@
                     </div>
 
                     <!-- Buttons für Kategorien -->    
+                    <!-- Name eingabe -->
+
+
                     <c:if test="${kategorieGewaehlt == false}">
-                        <div class="row">
-                            <div class="col-md-4" style="margin-top: 5px">
-                                <form method="post">
-                                    <!-- Input als type hidden: dient nur zur Unterscheidung der Buttons in IndexServlet -->
-                                    <input type="hidden" name="btn1" type="text" value="btn1"/>
-                                    <button type="submit" id="btn1" class="btn btn-success btn-block">
+                        <form method="post">
+                            <div class="row">
+                                <div class="col-md-4" style="margin-top: 5px">
+                                    <button type="submit" id="btn1" name="btn1" value="btn1" class="btn btn-success btn-block">
                                         Was-Fragen
                                     </button>
-                                </form>
-                            </div>
+                                </div>
 
-                            <div class="col-md-4" style="margin-top: 5px">
-                                <form method="post">
-                                    <input type="hidden" name="btn2" type="text" value="btn2"/>
-                                    <button type="submit" id="btn2" class="btn btn-success btn-block" onClick="btn2()">
+                                <div class="col-md-4" style="margin-top: 5px">
+                                    <button type="submit" id="btn2" name="btn2" value="btn2" class="btn btn-success btn-block">
                                         Wann-Fragen
                                     </button>
-                                </form>
-                            </div>
-                            <div class="col-md-4" style="margin-top: 5px">
-                                <form method="post">
-                                    <input type="hidden" name="btn3" type="text" value="btn3"/>
-                                    <button type="submit" class="btn btn-success btn-block">
+                                </div>
+                                <div class="col-md-4" style="margin-top: 5px">
+                                    <button type="submit" id="btn3" name="btn3" value="btn3" class="btn btn-success btn-block">
                                         Wo-Fragen
                                     </button>
-                                </form>
+                                </div>
                             </div>
-                        </div>
+
+                            <div class="row" style="margin-top: 15px">
+
+                                <div class="col-md-2"> </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-2"> </div>
+                                <c:if test="${spielerName == null}">
+                                    <input class="form-control col-md-8" style="margin-top: 5px" name="spielerName" id="spielerName" type="text" placeholder="Dein Name"/>
+                                </c:if>
+                                <c:if test="${spielerName != null}">
+                                    <input class="form-control col-md-8" style="margin-top: 5px" name="spielerName" id="spielerName" type="text" placeholder="${spielerName}" readonly/>
+                                </c:if>
+                                <div class="col-md-2"> </div>
+                            </div>
+                        </form>
                     </c:if>
 
                     <!-- Eingabefeld -->
@@ -81,7 +92,7 @@
                                         <div class="col">
                                             <%
                                                 StringBuilder sb1 = new StringBuilder();
-                                                sb1.append("<input  class=\"form-control form-control-lg form-control-borderless\" name=\"eingabe\" type=\"search\" placeholder=\"");
+                                                sb1.append("<input  autocomplete=\"off\" class=\"form-control form-control-lg form-control-borderless\" name=\"eingabe\" type=\"search\" placeholder=\"");
                                                 sb1.append(session.getAttribute("zuSuchenderString"));
                                                 sb1.append("\">");
                                             %>
