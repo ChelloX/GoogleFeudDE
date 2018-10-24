@@ -37,30 +37,6 @@ public class IndexServlet extends HttpServlet {
             session = request.getSession();
         }
 
-        if (session.getAttribute("fehlversuch") != null) {
-            int versuche = (int) session.getAttribute("counterVersuche");
-            session.setAttribute("counterVersuche", versuche - 1);
-
-            if (versuche - 1 == 0) {
-                if (session.getAttribute("spielerName") != null) {
-                    DatenbankVerbindung dbv = new DatenbankVerbindung();
-                    dbv.updatePunkte((String) session.getAttribute("spielerName"), (int) session.getAttribute("counterPunkte"));
-
-                    session.setAttribute("fehlversuche", null);
-                    session.setAttribute("kategorieGewaehlt", null);
-                }
-            }
-        }
-
-        if (session.getAttribute("trefferKey") != null) {
-            session.setAttribute("kategorieGewaehlt", true);
-            int treffer = (int) session.getAttribute("trefferKey");
-            HashMap<Integer, Map.Entry<String, Boolean>> vorschlaege = (HashMap<Integer, Map.Entry<String, Boolean>>) session.getAttribute("vorschlaege");
-            Map.Entry<String, Boolean> valueNeu = new AbstractMap.SimpleEntry<String, Boolean>(vorschlaege.get(treffer).getKey(), true);
-            vorschlaege.replace(treffer, valueNeu);
-            session.setAttribute("vorschlaege", vorschlaege);
-        }
-
         if (session.getAttribute("kategorie") != null) {
             String kategorie = (String) session.getAttribute("kategorie");
             session.setAttribute("kategorieGewaehlt", true);
@@ -133,6 +109,11 @@ public class IndexServlet extends HttpServlet {
                     if (entry.equals(entry2.getValue())) {
                         Integer key = entry2.getKey();
 
+                        HashMap<Integer, Map.Entry<String, Boolean>> vorschlaege2 = (HashMap<Integer, Map.Entry<String, Boolean>>) session.getAttribute("vorschlaege");
+                        Map.Entry<String, Boolean> valueNeu = new AbstractMap.SimpleEntry<>(vorschlaege2.get(key).getKey(), true);
+                        vorschlaege.replace(key, valueNeu);
+                        session.setAttribute("vorschlaege", vorschlaege);
+
                         session.setAttribute("trefferKey", key);
                     }
                 }
@@ -146,7 +127,8 @@ public class IndexServlet extends HttpServlet {
                         dbv.updatePunkte((String) session.getAttribute("spielerName"), (int) session.getAttribute("counterPunkte"));
 
                         session.setAttribute("fehlversuche", null);
-                        session.setAttribute("kategorieGewaehlt", null);
+                        session.setAttribute("kategorieGewaehlt", false);
+                        session.setAttribute("kategorie", null);
                     }
                 }
             }
