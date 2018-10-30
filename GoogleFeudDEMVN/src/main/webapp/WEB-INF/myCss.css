@@ -1,0 +1,27 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 30.10.2018, 17:35:00
+    Author     : vikr
+*/
+
+.slide-left {
+  width:100%;
+  overflow:hidden;
+  animation: slide-left 2s;
+}
+
+@keyframes slide-left {
+  from {
+    margin-left: 100%;
+    width: 0%; 
+  }
+
+  to {
+    margin-left: 0%;
+    width: 100%;
+  }
+}
