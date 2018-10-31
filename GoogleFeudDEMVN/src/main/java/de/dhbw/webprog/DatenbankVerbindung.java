@@ -1,21 +1,25 @@
 package de.dhbw.webprog;
 
-import java.sql.Array;
+import com.sun.javafx.scene.control.skin.VirtualFlow;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-/**
- *
- * @author DSemling
- */
+
 public class DatenbankVerbindung {
 
     private static Connection conn;
@@ -45,23 +49,22 @@ public class DatenbankVerbindung {
         }
     }
 
-    public HashMap<String, Integer> getPunkte() {
-        HashMap<String, Integer> spielerPunkteMap = null;
+    public List<Entry<String, Integer>> getPunkte() {
+        List<Entry<String, Integer>> spielerPunkteList = null;
         try {
-            PreparedStatement prepstmt = conn.prepareStatement("SELECT spieler_name, punkte FROM bestenliste;");
+            PreparedStatement prepstmt = conn.prepareStatement("SELECT spieler_name, punkte FROM bestenliste ORDER BY punkte desc LIMIT 10;");
             ResultSet rs = prepstmt.executeQuery();
 
-            spielerPunkteMap = new HashMap<>();
+            spielerPunkteList = new ArrayList<>();
 
             while (rs.next()) {
-                spielerPunkteMap.put(rs.getString(1), rs.getInt(2));
+                spielerPunkteList.add(new AbstractMap.SimpleEntry<>(rs.getString(1), rs.getInt(2)));
             }
 
+            return spielerPunkteList;
         } catch (SQLException ex) {
             Logger.getLogger(DatenbankVerbindung.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            return spielerPunkteMap;
         }
+        return null;
     }
-
 }
