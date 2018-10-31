@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -24,23 +26,18 @@ public class IndexServlet extends HttpServlet {
         HttpSession session = null;
         if (request.getSession(false) == null) {
             session = request.getSession(true);
-            session.setAttribute("kategorieGewaehlt", false);
-            session.setAttribute("counterVersuche", 3);
-            session.setAttribute("counterRunde", 0);
-            session.setAttribute("counterPunkte", 0);
-
-            DatenbankVerbindung dbv = new DatenbankVerbindung();
-            dbv.updatePunkte("daniel", 100);
-            dbv.getPunkte();
-
+            session.setAttribute(Statics.getZEIGE_AUSWAHL_KATEGORIE(), true);
+            session.setAttribute(Statics.getCOUNTER_VERSUCHE(), 3);
+            session.setAttribute(Statics.getCOUNTER_RUNDE(), 0);
+            session.setAttribute(Statics.getCOUNTER_PUNKTE(), 0);
         } else {
             session = request.getSession();
         }
 
-        if (session.getAttribute("kategorie") != null) {
-            String kategorie = (String) session.getAttribute("kategorie");
-            session.setAttribute("kategorieGewaehlt", true);
+        if (session.getAttribute(Statics.getKATEGORIE()) != null) {
+            session.setAttribute(Statics.getZEIGE_AUSWAHL_KATEGORIE(), false);
 
+            String kategorie = (String) session.getAttribute(Statics.getKATEGORIE());
             GoogleSearchAPI api = new GoogleSearchAPI();
             GoogleTrendsAPI t_api = new GoogleTrendsAPI();
             String zuSuchenderString = t_api.gibZufaelligeFrageZuKategorie(kategorie);
@@ -52,8 +49,16 @@ public class IndexServlet extends HttpServlet {
                 vorschlaege.put(e.getKey(), new AbstractMap.SimpleEntry(e.getValue(), false));
             }
 
-            session.setAttribute("zuSuchenderString", zuSuchenderString);
-            session.setAttribute("vorschlaege", vorschlaege);
+            session.setAttribute(Statics.getZU_SUCHENDER_STRING(), zuSuchenderString);
+            session.setAttribute(Statics.getVORSCHLAEGE(), vorschlaege);
+            session.setAttribute(Statics.getCOUNTER_VERSUCHE(), 3);
+            session.setAttribute(Statics.getCOUNTER_RUNDE(), (int) session.getAttribute(Statics.getCOUNTER_RUNDE()) + 1);
+        }
+
+        DatenbankVerbindung dbv = new DatenbankVerbindung();
+        List<Map.Entry<String, Integer>> bestenliste = dbv.getPunkte();
+        if (bestenliste != null) {
+            session.setAttribute(Statics.getBESTENLISTE(), bestenliste);
         }
 
         session.getServletContext().getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
@@ -65,77 +70,76 @@ public class IndexServlet extends HttpServlet {
         HttpSession session = request.getSession(true);
 
         //Kategorie-Auswahl
-        String btn1 = request.getParameter("btn1");
-        String btn2 = request.getParameter("btn2");
-        String btn3 = request.getParameter("btn3");
+        String btn1 = request.getParameter(Statics.getBTN1());
+        String btn2 = request.getParameter(Statics.getBTN2());
+        String btn3 = request.getParameter(Statics.getBTN3());
 
-        String spielerName = request.getParameter("spielerName");
+        String spielerName = request.getParameter(Statics.getSPIELER_NAME());
 
         if (spielerName != null) {
-            session.setAttribute("spielerName", spielerName);
+            session.setAttribute(Statics.getSPIELER_NAME(), spielerName);
         }
 
         String kategorie = null;
         if (btn1 != null) {
-            kategorie = "Was";
+            kategorie = Statics.getWAS();
         }
 
         if (btn2 != null) {
-            kategorie = "Wann";
+            kategorie = Statics.getWANN();
         }
 
         if (btn3 != null) {
-            kategorie = "Wo";
+            kategorie = Statics.getWO();
         }
 
-        session.setAttribute("kategorie", kategorie);
+        session.setAttribute(Statics.getKATEGORIE(), kategorie);
 
         //Eingabe
-        String eingabe = request.getParameter("eingabe");
+        String eingabe = request.getParameter(Statics.getEINGABE());
 
         if (eingabe != null) {
-            eingabe = session.getAttribute("zuSuchenderString") + " " + eingabe;
-            HashMap<Integer, Map.Entry<String, Boolean>> vorschlaege = (HashMap<Integer, Map.Entry<String, Boolean>>) session.getAttribute("vorschlaege");
+            String eingabe_con = session.getAttribute(Statics.getZU_SUCHENDER_STRING()) + " " + eingabe;
+            HashMap<Integer, Map.Entry<String, Boolean>> vorschlaege = (HashMap<Integer, Map.Entry<String, Boolean>>) session.getAttribute(Statics.getVORSCHLAEGE());
 
-            Map.Entry entry = new AbstractMap.SimpleEntry(eingabe, false);
+            Map.Entry entry = new AbstractMap.SimpleEntry(eingabe_con, false);
 
             boolean treffer = vorschlaege.containsValue(entry);
             if (treffer) {
 
-                session.setAttribute("counterPunkte", (int) session.getAttribute("counterPunkte") + 1000);
+                session.setAttribute(Statics.getCOUNTER_PUNKTE(), (int) session.getAttribute(Statics.getCOUNTER_PUNKTE()) + 1000);
                 Iterator<Map.Entry<Integer, Map.Entry<String, Boolean>>> it = vorschlaege.entrySet().iterator();
                 while (it.hasNext()) {
                     Map.Entry<Integer, Map.Entry<String, Boolean>> entry2 = it.next();
                     if (entry.equals(entry2.getValue())) {
                         Integer key = entry2.getKey();
 
-                        HashMap<Integer, Map.Entry<String, Boolean>> vorschlaege2 = (HashMap<Integer, Map.Entry<String, Boolean>>) session.getAttribute("vorschlaege");
+                        HashMap<Integer, Map.Entry<String, Boolean>> vorschlaege2 = (HashMap<Integer, Map.Entry<String, Boolean>>) session.getAttribute(Statics.getVORSCHLAEGE());
                         Map.Entry<String, Boolean> valueNeu = new AbstractMap.SimpleEntry<>(vorschlaege2.get(key).getKey(), true);
                         vorschlaege.replace(key, valueNeu);
-                        session.setAttribute("vorschlaege", vorschlaege);
+                        session.setAttribute(Statics.getVORSCHLAEGE(), vorschlaege);
 
-                        session.setAttribute("trefferKey", key);
+                        session.setAttribute(Statics.getTREFFER_KEY(), key);
                     }
                 }
             } else {
-                int versuche = (int) session.getAttribute("counterVersuche");
-                session.setAttribute("counterVersuche", versuche - 1);
+                int versuche = (int) session.getAttribute(Statics.getCOUNTER_VERSUCHE());
+                session.setAttribute(Statics.getCOUNTER_VERSUCHE(), versuche - 1);
 
                 if (versuche - 1 == 0) {
-                    if (session.getAttribute("spielerName") != null) {
+                    String tempName = (String) session.getAttribute(Statics.getSPIELER_NAME());
+                    if (session.getAttribute(Statics.getSPIELER_NAME()) != null && !session.getAttribute(Statics.getSPIELER_NAME()).equals("")) {
                         DatenbankVerbindung dbv = new DatenbankVerbindung();
-                        dbv.updatePunkte((String) session.getAttribute("spielerName"), (int) session.getAttribute("counterPunkte"));
-
-                        session.setAttribute("fehlversuche", null);
-                        session.setAttribute("kategorieGewaehlt", false);
-                        session.setAttribute("kategorie", null);
+                        dbv.updatePunkte((String) session.getAttribute(Statics.getSPIELER_NAME()), (int) session.getAttribute(Statics.getCOUNTER_PUNKTE()));
                     }
+                    session.setAttribute(Statics.getZEIGE_AUSWAHL_KATEGORIE(), true);
+                    session.setAttribute(Statics.getKATEGORIE(), null);
                 }
             }
         }
 
         //Reset
-        String reset = request.getParameter("reset");
+        String reset = request.getParameter(Statics.getRESET());
         if (reset != null) {
             session.invalidate();
         }
@@ -147,5 +151,4 @@ public class IndexServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }
-
 }
