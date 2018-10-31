@@ -5,23 +5,19 @@
  */
 package de.dhbw.webprog;
 
-/**
- *
- * @author DSemling
- */
 public class GoogleTrendsAPI {
 
     //Hier richtige Logik implementieren
     public String  gibZufaelligeFrageZuKategorie(String thema) {
-        if(thema.equals("Was")) {
+        if(thema.equals(Statics.getWAS())) {
             return "was passierte am";
         }
         
-        if(thema.equals("Wann")) {
+        if(thema.equals(Statics.getWANN())) {
             return "wann gab es das erste";
         }
         
-        if(thema.equals("Wo")) {
+        if(thema.equals(Statics.getWO())) {
             return "wo gab es das erste";
         }
         return "";
