@@ -22,15 +22,6 @@ public class GoogleSearchAPI {
     private final String GOOGLE_API_1 = "https://www.google.com/complete/search?output=toolbar&q=";
     private final String GOOGLE_API_2 = "&hl=de";
     
-    public String machWas() {
-        return "hier";
-    }
-    
-    public static void main(String args[]) {
-        GoogleSearchAPI a = new GoogleSearchAPI();
-        a.gibAntwortenZuString("Karlsruhe");
-    }
-
     public HashMap<Integer,String> gibAntwortenZuString(String suchString) {
         suchString = suchString.replace(" ", "%20");
         Content content = null;
@@ -58,4 +49,5 @@ public class GoogleSearchAPI {
         }
     }
 }
+
 
