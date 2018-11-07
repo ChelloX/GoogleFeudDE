@@ -1,6 +1,6 @@
 # GoogleFeudDE
 
-## Todo vor Start 
+## Prerequisites
   - [ ] run local database-server
   - [ ] create database 'googlefeudde'
   - [ ] create table 'bestenliste'
