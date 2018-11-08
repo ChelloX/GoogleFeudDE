@@ -99,8 +99,8 @@
 
                                 <c:forEach items="${bestenliste}" var="eintrag">
                                     <tr>
-                                        <td><div class="slide-left"> ${eintrag.key} </div></td>
-                                        <td><div class="slide-left"> ${eintrag.value} </div></td>
+                                        <td><div> ${eintrag.key} </div></td>
+                                        <td><div> ${eintrag.value} </div></td>
                                     </tr>
                                 </c:forEach>
                             </table>
@@ -145,7 +145,12 @@
                                             <td></td>
                                         </c:if>
                                         <c:if test="${eintrag.value.value == true}" >
-                                            <td> <div class="slide-left">${eintrag.value.key} </div> </td>
+                                            <c:if test="${letzterTreffer == eintrag.value.key}" >
+                                                <td> <div class="slide-left">${eintrag.value.key} </div> </td>
+                                            </c:if>
+                                            <c:if test="${letzterTreffer != eintrag.value.key}">
+                                                <td> <div>${eintrag.value.key} </div> </td>
+                                            </c:if>                                     
                                         </c:if>
                                     </tr>
                                 </c:forEach>

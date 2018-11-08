@@ -29,6 +29,11 @@ public class Statics{
     private final static String WAS = "was";
     private final static String WANN = "wann";
     private final static String WO = "wo";
+    private final static String LETZTER_TREFFER = "letzterTreffer";
+    
+    public static String getLETZTER_TREFFER() {
+        return LETZTER_TREFFER;
+    }
 
     public static String getZEIGE_AUSWAHL_KATEGORIE() {
         return ZEIGE_AUSWAHL_KATEGORIE;

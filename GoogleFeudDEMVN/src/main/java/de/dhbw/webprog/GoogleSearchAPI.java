@@ -6,9 +6,7 @@
 package de.dhbw.webprog;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.http.client.fluent.Content;
@@ -37,7 +35,7 @@ public class GoogleSearchAPI {
             JSONObject toplevel = (JSONObject) document.get("toplevel");
             JSONArray completesuggestion = toplevel.getJSONArray("CompleteSuggestion");
 
-            HashMap<Integer, String> antworten = new HashMap<Integer, String>();
+            HashMap<Integer, String> antworten = new HashMap<>();
             for (int i = 0; i < completesuggestion.length(); i++) {
                 JSONObject t1 = (JSONObject) completesuggestion.get(i);
                 JSONObject t2 = (JSONObject) t1.get("suggestion");

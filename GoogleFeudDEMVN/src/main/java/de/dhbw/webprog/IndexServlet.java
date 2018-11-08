@@ -42,7 +42,7 @@ public class IndexServlet extends HttpServlet {
             String zuSuchenderString = t_api.gibZufaelligeFrageZuKategorie(kategorie);
             HashMap<Integer, String> api_antwort = api.gibAntwortenZuString(zuSuchenderString);
 
-            HashMap<Integer, Map.Entry<String, Boolean>> vorschlaege = new HashMap<Integer, Map.Entry<String, Boolean>>();
+            HashMap<Integer, Map.Entry<String, Boolean>> vorschlaege = new HashMap<>();
 
             for (Map.Entry<Integer, String> e : api_antwort.entrySet()) {
                 vorschlaege.put(e.getKey(), new AbstractMap.SimpleEntry(e.getValue(), false));
@@ -74,6 +74,8 @@ public class IndexServlet extends HttpServlet {
         String btn3 = request.getParameter(Statics.getBTN3());
 
         String spielerName = request.getParameter(Statics.getSPIELER_NAME());
+        
+        session.setAttribute(Statics.getLETZTER_TREFFER(), null);
 
         if (spielerName != null) {
             session.setAttribute(Statics.getSPIELER_NAME(), spielerName);
@@ -117,8 +119,7 @@ public class IndexServlet extends HttpServlet {
                         Map.Entry<String, Boolean> valueNeu = new AbstractMap.SimpleEntry<>(vorschlaege2.get(key).getKey(), true);
                         vorschlaege.replace(key, valueNeu);
                         session.setAttribute(Statics.getVORSCHLAEGE(), vorschlaege);
-
-                        session.setAttribute(Statics.getTREFFER_KEY(), key);
+                        session.setAttribute(Statics.getLETZTER_TREFFER(), vorschlaege2.get(key).getKey());
                     }
                 }
             } else {
@@ -126,7 +127,6 @@ public class IndexServlet extends HttpServlet {
                 session.setAttribute(Statics.getCOUNTER_VERSUCHE(), versuche - 1);
 
                 if (versuche - 1 == 0) {
-                    String tempName = (String) session.getAttribute(Statics.getSPIELER_NAME());
                     if (session.getAttribute(Statics.getSPIELER_NAME()) != null && !session.getAttribute(Statics.getSPIELER_NAME()).equals("")) {
                         DatenbankVerbindung dbv = new DatenbankVerbindung();
                         dbv.updatePunkte((String) session.getAttribute(Statics.getSPIELER_NAME()), (int) session.getAttribute(Statics.getCOUNTER_PUNKTE()));
