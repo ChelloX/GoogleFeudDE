@@ -1,17 +1,12 @@
 package de.dhbw.webprog;
 
-import com.sun.javafx.scene.control.skin.VirtualFlow;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.AbstractMap;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -50,12 +45,11 @@ public class DatenbankVerbindung {
     }
 
     public List<Entry<String, Integer>> getPunkte() {
-        List<Entry<String, Integer>> spielerPunkteList = null;
+        
         try {
+            List<Entry<String, Integer>> spielerPunkteList = new ArrayList<>();
             PreparedStatement prepstmt = conn.prepareStatement("SELECT spieler_name, punkte FROM bestenliste ORDER BY punkte desc LIMIT 10;");
             ResultSet rs = prepstmt.executeQuery();
-
-            spielerPunkteList = new ArrayList<>();
 
             while (rs.next()) {
                 spielerPunkteList.add(new AbstractMap.SimpleEntry<>(rs.getString(1), rs.getInt(2)));

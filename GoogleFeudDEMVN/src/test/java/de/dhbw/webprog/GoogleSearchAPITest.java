@@ -15,20 +15,51 @@ import org.junit.Test;
  */
 public class GoogleSearchAPITest {
 
-    @Test
-    public void testAntwortenZuString() {
-        GoogleSearchAPI api = new GoogleSearchAPI();
-        HashMap<Integer, String> s1 = api.gibAntwortenZuString("foo bar");
-        HashMap<Integer, String> s2 = api.gibAntwortenZuString("foobar");
-        HashMap<Integer, String> s3 = api.gibAntwortenZuString("foo "); //1x _
-        HashMap<Integer, String> s4 = api.gibAntwortenZuString(" foo"); // 1x_
-        HashMap<Integer, String> s5 = api.gibAntwortenZuString("foo  "); //2x _
-        HashMap<Integer, String> s6 = api.gibAntwortenZuString("  foo"); //2x _
+    private GoogleSearchAPI api = null;
 
-        assertTrue(!s1.isEmpty());
-        assertTrue(!s2.isEmpty());
-        assertTrue(!s3.isEmpty());
-        assertTrue(!s4.isEmpty());
-        assertTrue(!s5.isEmpty());
+    public GoogleSearchAPITest() {
+        api = new GoogleSearchAPI();
+    }
+
+    @Test
+    public void t1() {
+        HashMap<Integer, String> s = api.gibAntwortenZuString("foo bar");
+        assertTrue(!s.isEmpty());
+    }
+
+    @Test
+    public void t2() {
+        HashMap<Integer, String> s = api.gibAntwortenZuString("foobar");
+        assertTrue(!s.isEmpty());
+    }
+
+    @Test
+    public void t3() {
+        HashMap<Integer, String> s = api.gibAntwortenZuString("foo "); //1x _
+        assertTrue(!s.isEmpty());
+    }
+
+    @Test
+    public void t4() {
+        HashMap<Integer, String> s = api.gibAntwortenZuString(" foo"); //1x _
+        assertTrue(!s.isEmpty());
+    }
+
+    @Test
+    public void t5() {
+        HashMap<Integer, String> s = api.gibAntwortenZuString("foo  "); //2x _
+        assertTrue(!s.isEmpty());
+    }
+
+    @Test
+    public void t6() {
+        HashMap<Integer, String> s = api.gibAntwortenZuString("  foo"); //2x _
+        assertTrue(!s.isEmpty());
+    }
+    
+    @Test
+    public void t7() {
+        HashMap<Integer, String> s = api.gibAntwortenZuString("föö"); //2x _
+        assertTrue(!s.isEmpty());
     }
 }

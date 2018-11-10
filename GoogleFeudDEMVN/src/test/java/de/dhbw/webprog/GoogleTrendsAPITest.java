@@ -15,19 +15,30 @@ import org.junit.Test;
  */
 public class GoogleTrendsAPITest {
 
+    private GoogleTrendsAPI api = null;
+
+    public GoogleTrendsAPITest() {
+        api = new GoogleTrendsAPI();
+    }
+
     @Test
-    public void testFrageZuKategorie() {
-        GoogleTrendsAPI api = new GoogleTrendsAPI();
-
+    public void t1() {
         String was = api.gibZufaelligeFrageZuKategorie(Statics.getWAS());
-        String wann = api.gibZufaelligeFrageZuKategorie(Statics.getWANN());
-        String wo = api.gibZufaelligeFrageZuKategorie(Statics.getWO());
-
         assertNotNull(was);
-        assertNotNull(wann);
-        assertNotNull(wo);
         assertTrue(!was.equals(""));
-        assertTrue(!wann.equals(""));
+    }
+
+    @Test
+    public void t2() {
+        String wo = api.gibZufaelligeFrageZuKategorie(Statics.getWO());
+        assertNotNull(wo);
         assertTrue(!wo.equals(""));
+    }
+
+    @Test
+    public void t3() {
+        String wann = api.gibZufaelligeFrageZuKategorie(Statics.getWANN());
+        assertNotNull(wann);
+        assertTrue(!wann.equals(""));
     }
 }
